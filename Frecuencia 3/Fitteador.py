@@ -9,8 +9,8 @@ import numpy as np
 from scipy.optimize import *
 import matplotlib.pyplot as plt
 
-def seno(x,a,f,fase):
-    return (a*np.sin((2*np.pi*f*x)+fase))
+def seno(x,a,f,fase,Vbias):
+    return ((a*np.sin((2*np.pi*f*x)+fase))+Vbias)
 
 with np.load('Ensayo 1 CH1.npz') as archivo:
     time_V1 = archivo['x']
@@ -25,27 +25,27 @@ ini_cut = np.empty(1)
 
 ini_cut = 1200
 
-print V1.size()
+fin_cut = np.empty(1)
 
-V = V1[ ini_cut: V1.size() ]
-time = time_V1[ ini_cut: time_V1.size() ]
+fin_cut = ini_cut + 120000
 
-plt.plot(time, V,'b*', label = 'datos' )
+print fin_cut,ini_cut
 
-""" print (V1.shape)
+V = V1[ ini_cut: fin_cut]
+time = time_V1[ ini_cut: fin_cut ]
 
-popt, pcov = curve_fit(seno, time_V1, V1 )
+plt.plot(time, V,'b-', label = 'datos' )
+
+popt, pcov = curve_fit(seno, time, V )
 
 print (popt)
 
-plt.plot( time_V1, V1,'b*', label = 'datos' )
+plt.plot( time, V,'b*', label = 'datos' )
 
-plt.plot(time_V1, seno(time_V1, *popt), 'r-',label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
-
-
+plt.plot(time, seno(time, *popt), 'r-') #,label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
 plt.title( 'Time domain data. V1.' )
 plt.xlabel( 'Time (s)' )
 plt.ylabel( 'Volts' )
 plt.grid( True )
-plt.show()"""
+plt.show()
