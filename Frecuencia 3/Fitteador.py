@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 def seno(x,a,f,fase,Vbias):
     return ((a*np.sin((2*np.pi*f*x)+fase))+Vbias)
 
-with np.load('Ensayo 1 CH1.npz') as archivo:
+with np.load('Ensayo 1 CH1_acond.npz') as archivo:
     time_V1 = archivo['x']
     V1 = archivo['y']
 
@@ -21,28 +21,16 @@ with np.load('Ensayo 1 CH1.npz') as archivo:
 
 # Redefino los arrays sacando la primer parte
 
-ini_cut = np.empty(1)
+plt.plot(time_V1, V1,'b-', label = 'datos' )
 
-ini_cut = 1200
-
-fin_cut = np.empty(1)
-
-fin_cut = ini_cut + 120000
-
-print fin_cut,ini_cut
-
-V = V1[ ini_cut: fin_cut]
-time = time_V1[ ini_cut: fin_cut ]
-
-plt.plot(time, V,'b-', label = 'datos' )
-
-popt, pcov = curve_fit(seno, time, V )
+popt, pcov = curve_fit(seno, time_V1, V1, bounds= ((-np.inf,0.,-np.inf,-5.), (np.inf,np.inf,np.inf,5.)) )
+#bounds= ((0,10), (0,np.inf), (-np.inf,np.inf), (-5,5)) )
 
 print (popt)
 
-plt.plot( time, V,'b*', label = 'datos' )
+plt.plot( time_V1, V1,'b*', label = 'datos' )
 
-plt.plot(time, seno(time, *popt), 'r-') #,label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+plt.plot(time_V1, seno(time_V1, *popt), 'r-') #,label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
 plt.title( 'Time domain data. V1.' )
 plt.xlabel( 'Time (s)' )
