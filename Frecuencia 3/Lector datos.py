@@ -17,7 +17,7 @@ print title
 title = title + 'texto de extensión'
 print title
 
-with np.load('Ensayo 1 CH1.npz') as archivo:
+with np.load('Ensayo 1 CH1_acond.npz') as archivo:
     V1 = archivo['x']
     time_V1 = archivo['y']
     
@@ -30,7 +30,7 @@ plt.ylabel( 'Volts' )
 plt.grid( True )
 plt.show()
 
-with np.load('Ensayo 1 CH2.npz') as archivo:
+with np.load('Ensayo 1 CH2_acond.npz') as archivo:
     V2 = archivo['x']
     time_V2 = archivo['y']
     
