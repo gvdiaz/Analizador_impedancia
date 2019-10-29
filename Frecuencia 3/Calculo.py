@@ -1,0 +1,44 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct 29 05:59:30 2019
+
+Objetivo: Calcular valor de impedancia medida a partir de los datos acondicionados y fitteados.
+
+@author: tanita
+"""
+
+import numpy as np
+from scipy.optimize import *
+import matplotlib.pyplot as plt
+
+def seno(x,a,f,fase,Vbias):
+    return ((a*np.sin((2*np.pi*f*x)+fase))+Vbias)
+
+with np.load('Ensayo 1 CH1_acond_fit.npz') as archivo_1:
+    time_V1 = archivo_1['x']
+    sen_param_1 = archivo_1['y'] 
+
+with np.load('Ensayo 1 CH2_acond_fit.npz') as archivo_2:
+    time_V2 = archivo_2['x']
+    sen_param_2 = archivo_2['y']
+
+amplitud_1 =   sen_param_1[0]
+frecuencia_1 = sen_param_1[1]
+fase_1 =       sen_param_1[2]
+V_bias_1 =     sen_param_1[3]
+
+amplitud_2 =   sen_param_2[0]
+frecuencia_2 = sen_param_2[1]
+fase_2 =       sen_param_2[2]
+V_bias_2 =     sen_param_2[3]
+
+
+plt.plot( time_V1, seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.) ) #V_bias_1),'b-', label = 'datos' )
+
+plt.plot( time_V2, seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.) ) #V_bias_2), 'r-') 
+
+plt.title( 'Time domain data. V1 y V2.' )
+plt.xlabel( 'Time (s)' )
+plt.ylabel( 'Volts' )
+plt.grid( True )
+plt.show()
