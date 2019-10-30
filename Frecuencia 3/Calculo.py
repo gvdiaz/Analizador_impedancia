@@ -32,13 +32,37 @@ frecuencia_2 = sen_param_2[1]
 fase_2 =       sen_param_2[2]
 V_bias_2 =     sen_param_2[3]
 
+V_Raux = seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.) - seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.)
 
-plt.plot( time_V1, seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.) ) #V_bias_1),'b-', label = 'datos' )
+V_Zs1 = seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.)
 
-plt.plot( time_V2, seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.) ) #V_bias_2), 'r-') 
+plt.plot( time_V1, V_Raux, 'b-' ) #V_bias_1),'b-', label = 'datos' )
+
+plt.plot( time_V2, seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.), 'r-' ) #V_bias_2), 'r-') 
+plt.plot( time_V1, seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.), 'g-' )
 
 plt.title( 'Time domain data. V1 y V2.' )
 plt.xlabel( 'Time (s)' )
 plt.ylabel( 'Volts' )
 plt.grid( True )
+plt.show()
+
+""" Cálculo de diferencia de fase entre V_Raux y Vzs1 (V2) """
+
+""" 1ro Detecto cruce positivo de V_Raux """
+
+signo_V_Raux = np.sign(V_Raux)
+signo_V_Zs1  = np.sign(V_Zs1)
+
+plt.figure()
+
+plt.plot(  time_V2, signo_V_Zs1, 'r-')
+plt.plot( time_V1, signo_V_Raux, 'b-')
+
+plt.title( 'Time domain data. Cambio signo V_Raux y V_zs1' )
+plt.xlabel( 'Time (s)' )
+plt.ylabel( 'Volts' )
+plt.grid( True )
+plt.ylim(top=1.5)  # adjust the top leaving bottom unchanged
+plt.ylim(bottom=-1.5)  # adjust the bottom leaving top unchanged
 plt.show()
