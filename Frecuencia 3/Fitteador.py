@@ -51,4 +51,4 @@ plt.title( 'Time domain data. V1.' )
 plt.xlabel( 'Time (s)' )
 plt.ylabel( 'Volts' )
 plt.grid( True )
-plt.show()"""
+plt.show() """
