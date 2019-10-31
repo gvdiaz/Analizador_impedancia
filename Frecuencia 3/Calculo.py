@@ -36,16 +36,15 @@ V_Raux = seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.) - seno(time_V2, amp
 
 V_Zs1 = seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.)
 
-plt.plot( time_V1, V_Raux, 'b-' ) #V_bias_1),'b-', label = 'datos' )
+"""plt.plot( time_V1, V_Raux, 'b-' ) #V_bias_1),'b-', label = 'datos' )
 
-plt.plot( time_V2, seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.), 'r-' ) #V_bias_2), 'r-') 
-plt.plot( time_V1, seno(time_V1, amplitud_1, frecuencia_1, fase_1, 0.), 'g-' )
+plt.plot( time_V2, seno(time_V2, amplitud_2, frecuencia_2, fase_2, 0.), 'r-' )
 
-plt.title( 'Time domain data. V1 y V2.' )
+plt.title( 'Time domain data. V_Raux y Vzs1.' )
 plt.xlabel( 'Time (s)' )
 plt.ylabel( 'Volts' )
 plt.grid( True )
-plt.show()
+plt.show() """
 
 """ Cálculo de diferencia de fase entre V_Raux y Vzs1 (V2) """
 
@@ -53,6 +52,16 @@ plt.show()
 
 signo_V_Raux = np.sign(V_Raux)
 signo_V_Zs1  = np.sign(V_Zs1)
+
+""" Cálculo de máximo tiempo de fase (el máximo tiempo es +/-pi/2) """
+max_fase = (np.pi/2)*(np.power(frecuencia_1,-1))/(2*np.pi)
+
+print signo_V_Raux[1],signo_V_Raux[2]
+print (signo_V_Raux[1] != signo_V_Raux[2])
+
+for i in range( 0, V_Raux.size):
+    if ( signo_V_Raux[i] != signo_V_Raux[i+1] ) == True:
+        for j in range(i,V_Raux.size):
 
 plt.figure()
 
